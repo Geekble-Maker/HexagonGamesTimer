@@ -76,7 +76,7 @@ public class TimerController : MonoBehaviour
             {
                 orderNum--;
                 if (orderNum < 0) orderNum = 2;
-                Debug.Log(orderNum);
+                // Debug.Log(orderNum);
             }
         }
     }
@@ -97,9 +97,17 @@ public class TimerController : MonoBehaviour
         if (!isStart || isPause) return;
         
         currentTime[orderNum] -= Time.deltaTime;
-        SetTimer(timerTexts[orderNum], currentTime[orderNum]);
         if (currentTime[orderNum] < 0)
+        {
             currentTime[orderNum] = 0;
+            SetTimer(timerTexts[orderNum], currentTime[orderNum]);
+            
+            orderNum++;
+            if (orderNum > 2) orderNum = 0;
+            // Debug.Log(orderNum);
+        }
+        else
+            SetTimer(timerTexts[orderNum], currentTime[orderNum]);
     }
 
     private void SetTimer(TextMeshProUGUI _timerText, float _time)
