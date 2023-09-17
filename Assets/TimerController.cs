@@ -105,8 +105,9 @@ public class TimerController : MonoBehaviour
     private void SetTimer(TextMeshProUGUI _timerText, float _time)
     {
         TimeSpan timespan = TimeSpan.FromSeconds(_time);
+        int milisSeconds = timespan.Milliseconds / 10;
         string timeString = string.Format("{0:00}:{1:00}:{2:00}",
-            timespan.Minutes, timespan.Seconds, timespan.Milliseconds);
+            timespan.Minutes, timespan.Seconds, milisSeconds);
 
         _timerText.text = timeString;
     }
