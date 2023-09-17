@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
     [SerializeField] private GameObject parentObj;
+    [SerializeField] private GameObject pausePanelObj;
     [SerializeField] private GameObject[] panelPrefabs;
     [SerializeField] private Vector3[] orderVecs;
     [SerializeField] private float totalTime;
@@ -25,7 +27,7 @@ public class TimerController : MonoBehaviour
     {
         for (int i = 0; i < panelPrefabs.Length; i++)
         {
-            GameObject tempObj = Instantiate(panelPrefabs[i], parentObj.transform);
+            GameObject tempObj = Instantiate(panelPrefabs[ButtonController.orderNum[i]], parentObj.transform);
             panelObjs[i] = tempObj;
 
             timerTexts[i] = panelObjs[i].transform.GetChild(0).
@@ -38,9 +40,16 @@ public class TimerController : MonoBehaviour
 
     void Update()
     {
+        ReturnMenu();
         SwitchTimer();
         PauseTime();
         ChangeTime();
+    }
+
+    private void ReturnMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(0);
     }
 
     private void SwitchTimer()
@@ -76,7 +85,10 @@ public class TimerController : MonoBehaviour
     {
         if (!isStart) return;
         if (Input.GetKeyDown(KeyCode.P))
+        {
             isPause = !isPause;
+            pausePanelObj.SetActive(isPause);
+        }
 
     }
 
